@@ -3,6 +3,7 @@ import {Dashboard} from '../pages/Dashboard.tsx';
 import {PrivateRoute} from "../PrivateRoute.tsx";
 import Login from "../pages/Login.tsx";
 import NotFound from "../pages/NotFound.tsx";
+import {SubareaPage} from "../pages/Subarea.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -12,6 +13,7 @@ export const AppRoutes = () => {
                 <Route element={<PrivateRoute />}>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route path="subareas" element={<SubareaPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
