@@ -47,7 +47,7 @@ const columns = [
     },
 ];
 
-export default function DataTable() {
+export default function SubareaTable() {
     const {subareas, fetchSubareas} = useSubareaStore();
 
     useEffect(() => {

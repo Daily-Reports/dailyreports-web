@@ -1,6 +1,6 @@
 import Sidebar from "../components/sidebar/Sidebar.tsx";
 import PageTitle from "../components/PageTitle.tsx";
-import DataTable from "../components/table/DataTable.tsx";
+import SubareaTable from "../components/table/SubareaTable.tsx";
 
 export const SubareaPage = () => {
     return (
@@ -9,7 +9,7 @@ export const SubareaPage = () => {
 
             <div className="flex flex-col mx-5 mt-20">
                 <PageTitle title="Subareas" subtitle="Manage your subareas" />
-                <DataTable />
+                <SubareaTable />
             </div>
         </div>
     );
