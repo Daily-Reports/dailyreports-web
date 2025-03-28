@@ -61,6 +61,11 @@ export const useAuthStore = create<AuthState>((set) => {
                 const response = await axios.get(`${API_BASE_URL}/auth/validate`, {params: {token}});
                 if (response.status === 200) {
                     set({user: response.data, isAuthenticated: true});
+
+                    const authHeader= axios.defaults.headers.common["Authorization"];
+                    if(!authHeader || authHeader != token)
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                    
                     return true;
                 } else {
                     useAuthStore.getState().logout();
