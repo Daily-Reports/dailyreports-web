@@ -33,12 +33,9 @@ const SubareaTable: React.FC = () => {
                           subtitle={"Are you sure you want to delete this subarea?"}
                           open={deleteOpen}
                           onDelete={() => {
-                              if(selectedId !== null)
-                                  removeSubArea(selectedId);
+                              if(selectedId !== null) removeSubArea(selectedId);
                           }}
-                          setOpen={setDeleteOpen}>
-
-            </DeleteDialog>
+                          setOpen={setDeleteOpen} />
         </div>
     )
 }
