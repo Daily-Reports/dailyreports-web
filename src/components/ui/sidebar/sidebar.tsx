@@ -10,9 +10,9 @@ import {
     IconSwitchVertical,
     IconUsers
 } from '@tabler/icons-react';
-import SidebarItem from "./SidebarItem.tsx";
-import {useAuthStore} from "../../stores/authStore.tsx";
-import {useSidebarStore} from "../../stores/sidebarStore.tsx";
+import SidebarItem from "./sidebar-item.tsx";
+import {useAuthStore} from "@/stores/authStore.tsx";
+import {useSidebarStore} from "@/stores/sidebarStore.tsx";
 
 const Sidebar: React.FC = () => {
     const {user, logout} = useAuthStore();
@@ -41,11 +41,11 @@ const Sidebar: React.FC = () => {
                 </h3>
 
                 <ul className="space-y-1">
-                    <SidebarItem to="/" icon={<IconDashboard/>} label="Dashboard"/>
-                    <SidebarItem to="/reports" icon={<IconFileText/>} label="Reports"/>
-                    <SidebarItem to="/employees" icon={<IconUsers/>} label="Employees"/>
+                    <SidebarItem to="/" icon={<IconDashboard />} label="Dashboard"/>
+                    <SidebarItem to="/reports" icon={<IconFileText />} label="Reports"/>
+                    <SidebarItem to="/employees" icon={<IconUsers />} label="Employees"/>
                     <SidebarItem
-                        icon={<IconFileStack/>}
+                        icon={<IconFileStack />}
                         label="Order Book"
                         subItems={[
                             { to: "/orders", label: "Orders", icon: <IconClipboardList /> },
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
                             Admin
                         </h3>
                         <ul className="space-y-1">
-                            <SidebarItem to="/users" icon={<IconUsers/>} label="Users"/>
+                            <SidebarItem to="/users" icon={<IconUsers />} label="Users"/>
                         </ul>
                     </div>
                 )}
@@ -79,7 +79,7 @@ const Sidebar: React.FC = () => {
                         <p className="text-gray-900 text-xs font-semibold">{user?.email}</p>
                     </div>
 
-                    <IconSwitchVertical size={20} className="text-gray-600"/>
+                    <IconSwitchVertical size={20} className="text-gray-600" />
                 </button>
 
                 {isProfileOpen && (
@@ -89,7 +89,7 @@ const Sidebar: React.FC = () => {
                             className="flex items-center w-full py-2 px-4 text-red-600 bg-red-100 rounded-lg hover:bg-red-200 transition duration-200"
                             aria-label="Sair"
                         >
-                            <IconLogout className="mr-2" size={25}/>
+                            <IconLogout className="mr-2" size={25} />
                             Sair
                         </button>
                     </div>

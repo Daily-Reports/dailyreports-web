@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAuthStore} from "../stores/authStore";
+import {useAuthStore} from "@/stores/authStore.tsx";
 
-export const Login = () => {
+const LoginRoute = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +21,9 @@ export const Login = () => {
         })
     };
 
-    if (isAuthenticated) navigate('/');
+    useEffect(() => {
+        if (isAuthenticated) navigate('/');
+    }, [isAuthenticated, navigate]);
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100 font-sans">
@@ -65,4 +67,4 @@ export const Login = () => {
     );
 };
 
-export default Login;
+export default LoginRoute;

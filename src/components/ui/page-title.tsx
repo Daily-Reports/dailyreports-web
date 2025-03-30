@@ -5,7 +5,7 @@ type PageTitleProps = {
     subtitle?: string;
 };
 
-const PageTitle: React.FC<PageTitleProps> = ({ title, subtitle }) => {
+const PageTitle: React.FC<PageTitleProps> = ({ title, subtitle}) => {
     return (
         <div>
             <div className="text-3xl font-bold">{title}</div>

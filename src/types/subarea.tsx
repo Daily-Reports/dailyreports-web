@@ -1,4 +1,4 @@
 export type Subarea = {
-    id: number;
+    id: number,
     name: string;
 };

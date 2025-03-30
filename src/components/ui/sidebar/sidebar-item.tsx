@@ -50,7 +50,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({to, icon, label, subItems }) =
                     ))}
                 </ul>
             )}
-
         </li>
     );
 };

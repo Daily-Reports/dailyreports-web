@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFoundPage: React.FC = () => {
+const NotFoundRoute: React.FC = () => {
     return (
         <div className="h-[100vh] bg-[#f9f9f9] text-black flex flex-col justify-center items-center p-6">
             <h1 className="text-4xl font-bold text-gray-700">404</h1>
@@ -9,4 +9,4 @@ const NotFoundPage: React.FC = () => {
     );
 };
 
-export default NotFoundPage;
+export default NotFoundRoute;

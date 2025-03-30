@@ -1,8 +1,8 @@
-import Sidebar from "../components/sidebar/Sidebar.tsx";
-import PageTitle from "../components/PageTitle.tsx";
-import SubareaTable from "../components/table/SubareaTable.tsx";
+import Sidebar from '@/components/ui/sidebar/sidebar.tsx';
+import PageTitle from "@/components/ui/page-title.tsx";
+import SubareaTable from "@/features/subarea/components/subarea-table.tsx";
 
-export const SubareaPage = () => {
+const SubareaRoute = () => {
     return (
         <div className="flex">
             <Sidebar />
@@ -14,3 +14,5 @@ export const SubareaPage = () => {
         </div>
     );
 };
+
+export default SubareaRoute;

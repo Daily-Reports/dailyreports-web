@@ -1,7 +1,7 @@
-import Sidebar from "../components/sidebar/Sidebar.tsx";
-import PageTitle from "../components/PageTitle.tsx";
+import PageTitle from "@/components/ui/page-title.tsx";
+import Sidebar from "@/components/ui/sidebar/sidebar.tsx";
 
-export const Dashboard = () => {
+const DashboardRoute = () => {
     return (
         <div className="flex">
             <Sidebar />
@@ -12,3 +12,5 @@ export const Dashboard = () => {
         </div>
     );
 };
+
+export default DashboardRoute;

@@ -63,6 +63,7 @@ export const useAuthStore = create<AuthState>((set) => {
                     set({user: response.data, isAuthenticated: true});
 
                     const authHeader= axios.defaults.headers.common["Authorization"];
+
                     if(!authHeader || authHeader != token)
                         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
                     
