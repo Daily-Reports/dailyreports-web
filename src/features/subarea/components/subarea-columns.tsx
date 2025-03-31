@@ -12,6 +12,7 @@ export const columns = (handleEdit: (id: number) => void, handleDelete: (id: num
                     <IconId className="mr-2" size={16} /> ID
                 </span>
             ),
+            enableGlobalFilter: false,
         },
         {
             accessorKey: "name",

@@ -21,13 +21,20 @@ const SubareaTable: React.FC = () => {
 
     return (
         <div className="flex flex-col mt-5">
-            <Table columns={columns((id) => {
-                setEditOpen(true)
-                setSelectedId(id)
-            }, (id) => {
-                setDeleteOpen(true)
-                setSelectedId(id)
-            })} data={subareas} />
+            <Table
+                    columns={columns(
+                            (id) => {
+                                setEditOpen(true);
+                                setSelectedId(id);
+                            },
+                            (id) => {
+                                setDeleteOpen(true);
+                                setSelectedId(id);
+                            }
+                    )}
+                    data={subareas}
+                    toolbarPlaceholder={"Filter subareas..."}
+            />
 
             <DeleteDialog title={"Confirm Delete"}
                           subtitle={"Are you sure you want to delete this subarea?"}

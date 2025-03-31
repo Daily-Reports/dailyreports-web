@@ -66,12 +66,18 @@ export const TableCell = React.forwardRef<
 export type TableProps<T> = {
     data: T[];
     columns: ColumnDef<T>[];
+    showToolbar?: boolean;
+    toolbarPlaceholder?: string;
+    showPagination?: boolean;
 };
 
-export const Table = <T,>({
-                                                   data,
-                                                   columns,
-                                               }: TableProps<T>) => {
+export const Table = <T, >({
+                               data,
+                               columns,
+                               showToolbar = true,
+                               toolbarPlaceholder = "Filter values...",
+                               showPagination = true,
+                           }: TableProps<T>) => {
     const table = useReactTable({
         data: data,
         columns,
@@ -88,7 +94,7 @@ export const Table = <T,>({
 
     return (
         <div>
-            <TableToolbar table={table} placeholder={"Filter subareas..."} />
+            {showToolbar && <TableToolbar table={table} placeholder={toolbarPlaceholder} />}
 
             <TableElement>
                 <TableHeader>
@@ -133,7 +139,7 @@ export const Table = <T,>({
                 </TableBody>
             </TableElement>
 
-            <TablePagination table={table} />
+            {showPagination && <TablePagination table={table} />}
         </div>
     )
 }
