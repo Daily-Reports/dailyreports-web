@@ -30,20 +30,21 @@ export const useSubareaStore = create<SubareaState>((set) => ({
     editSubarea: async (id: number, name: string) => {
         try {
             const response = await axios.put(`${API_BASE_URL}/subareas/${id}/update`, {
-                method: "PUT",
+                name: name
+            },{
                 headers: {
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({name}),
+                }
             })
 
-            if (response.status === 200)
+            if (response.status === 200) {
                 set((state) => ({
                             subareas: state.subareas.map((subarea) =>
                                     subarea.id === id ? {...subarea, name: name} : subarea
                             ),
                         }
                 ));
+            }
         } catch (error) {
             console.error("cannot update subarea", error);
         }
