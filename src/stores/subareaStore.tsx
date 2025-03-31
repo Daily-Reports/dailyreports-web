@@ -7,8 +7,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 interface SubareaState {
     subareas: Subarea[];
     fetchSubareas: () => Promise<void>;
-    editSubarea: (id: number, name: string) => void;
-    removeSubarea: (id: number) => void;
+    editSubarea: (id: number, name: string) => Promise<void>;
+    createSubarea: (name: string) => Promise<void>;
+    removeSubarea: (id: number) => Promise<void>;
 }
 
 export const useSubareaStore = create<SubareaState>((set) => ({
@@ -27,6 +28,24 @@ export const useSubareaStore = create<SubareaState>((set) => ({
             console.error("cannot fetch subareas", error);
         }
     },
+    createSubarea: async (name: string) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/subareas`, {
+                name: name
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.status === 200)
+                set((state) => ({
+                    subareas: [...state.subareas, response.data]
+                }));
+        } catch (error) {
+            console.error("Cannot create subarea", error);
+        }
+    },
     editSubarea: async (id: number, name: string) => {
         try {
             const response = await axios.put(`${API_BASE_URL}/subareas/${id}/update`, {
@@ -37,14 +56,13 @@ export const useSubareaStore = create<SubareaState>((set) => ({
                 }
             })
 
-            if (response.status === 200) {
+            if (response.status === 200)
                 set((state) => ({
                             subareas: state.subareas.map((subarea) =>
                                     subarea.id === id ? {...subarea, name: name} : subarea
                             ),
                         }
                 ));
-            }
         } catch (error) {
             console.error("cannot update subarea", error);
         }

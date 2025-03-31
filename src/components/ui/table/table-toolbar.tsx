@@ -4,11 +4,13 @@ import {IconPlus} from "@tabler/icons-react";
 export type TableToolbarProps<T> = {
     table: Table<T>;
     placeholder: string;
+    onCreateClick?: () => void;
 }
 
 export const TableToolbar = <T, >({
                                       table,
                                       placeholder,
+                                      onCreateClick
                                   }: TableToolbarProps<T>) => {
     return (
         <div className="flex items-center mb-3">
@@ -21,7 +23,7 @@ export const TableToolbar = <T, >({
             </div>
             <button
                 className="ml-4 p-2 rounded-md border-2 border-gray-200 hover:bg-gray-50"
-                onClick={() => {}}
+                onClick={onCreateClick && onCreateClick}
             >
                 <IconPlus size={20} />
             </button>

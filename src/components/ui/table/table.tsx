@@ -69,6 +69,7 @@ export type TableProps<T> = {
     showToolbar?: boolean;
     toolbarPlaceholder?: string;
     showPagination?: boolean;
+    onCreateClick?: () => void;
 };
 
 export const Table = <T, >({
@@ -77,6 +78,7 @@ export const Table = <T, >({
                                showToolbar = true,
                                toolbarPlaceholder = "Filter values...",
                                showPagination = true,
+                               onCreateClick,
                            }: TableProps<T>) => {
     const table = useReactTable({
         data: data,
@@ -94,7 +96,9 @@ export const Table = <T, >({
 
     return (
         <div>
-            {showToolbar && <TableToolbar table={table} placeholder={toolbarPlaceholder} />}
+            {showToolbar && <TableToolbar table={table}
+                                          onCreateClick={onCreateClick && onCreateClick}
+                                          placeholder={toolbarPlaceholder} />}
 
             <TableElement>
                 <TableHeader>
