@@ -16,19 +16,18 @@ import {useSidebarStore} from "@/stores/sidebarStore.tsx";
 
 const Sidebar: React.FC = () => {
     const {user, logout} = useAuthStore();
-    const {isProfileOpen, toggleProfile, closeProfile} = useSidebarStore();
+    const {isProfileOpen, isOrderBookOpen, toggleProfile, toggleOrderBook} = useSidebarStore();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                closeProfile();
-            }
+            if (isProfileOpen && dropdownRef.current && !dropdownRef.current.contains(event.target as Node))
+                toggleProfile()
         };
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [closeProfile]);
+    }, [isProfileOpen, toggleProfile]);
 
     return (
         <div
@@ -53,6 +52,8 @@ const Sidebar: React.FC = () => {
                             { to: "/areas", label: "Areas", icon: <IconMap  /> },
                             { to: "/subareas", label: "Subareas", icon: <IconMap  /> }
                         ]}
+                        setOpen={toggleOrderBook}
+                        isOpen={isOrderBookOpen}
                     />
                 </ul>
 

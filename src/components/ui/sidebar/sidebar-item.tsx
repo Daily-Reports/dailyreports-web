@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {IconChevronDown, IconChevronRight} from "@tabler/icons-react";
 
@@ -7,16 +7,16 @@ type SidebarItemProps = {
     icon: ReactElement;
     label: string;
     subItems?: { to: string; label: string; icon : ReactElement }[];
+    isOpen?: boolean;
+    setOpen?: (open: boolean) => void;
 };
 
-const SidebarItem: React.FC<SidebarItemProps> = ({to, icon, label, subItems }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const SidebarItem: React.FC<SidebarItemProps> = ({to, icon, label, subItems, isOpen, setOpen}) => {
     const navigate = useNavigate();
 
     const handleToggle = () => {
-        if (subItems) {
-            setIsOpen(!isOpen);
-        }
+        if (subItems)
+            setOpen?.(!isOpen);
     };
 
     return (
