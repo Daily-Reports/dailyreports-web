@@ -1,13 +1,13 @@
-import {useSubareaStore} from "@/stores/subareaStore.tsx";
 import React, {useEffect, useState} from "react";
+import {AreaColumns} from './area-columns.tsx'
 import {Table} from "@/components/ui/table/table.tsx";
 import DeleteDialog from "@/components/ui/dialog/delete-dialog.tsx";
-import SubareaEditDialog from "@/features/subarea/components/subarea-edit-dialog.tsx";
-import SubareaCreateDialog from "@/features/subarea/components/subarea-create-dialog.tsx";
-import {SubareaColumns} from "@/features/subarea/components/subarea-columns.tsx";
+import {useAreaStore} from "@/stores/areaStore.tsx";
+import AreaCreateDialog from "@/features/area/components/area-create-dialog.tsx";
+import AreaEditDialog from "@/features/area/components/area-edit-dialog.tsx";
 
-const SubareaTable: React.FC = () => {
-    const {subareas, fetchSubareas, editSubarea, createSubarea, removeSubarea} = useSubareaStore();
+const AreaTable: React.FC = () => {
+    const {areas, fetchAreas, editArea, createArea, removeArea} = useAreaStore();
 
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -16,16 +16,16 @@ const SubareaTable: React.FC = () => {
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     useEffect(() => {
-        fetchSubareas().catch((error) => {
+        fetchAreas().catch((error) => {
             console.error(error)
-            throw new Error("Subareas cannot be loaded");
+            throw new Error("Areas cannot be loaded");
         })
-    }, [fetchSubareas]);
+    }, [fetchAreas]);
 
     return (
         <div className="flex flex-col mt-5">
             <Table
-                    columns={SubareaColumns(
+                    columns={AreaColumns(
                             (id) => {
                                 setEditOpen(true);
                                 setSelectedId(id);
@@ -35,31 +35,31 @@ const SubareaTable: React.FC = () => {
                                 setSelectedId(id);
                             }
                     )}
-                    data={subareas}
-                    toolbarPlaceholder={"Filter subareas..."}
+                    data={areas}
+                    toolbarPlaceholder={"Filter areas..."}
                     onCreateClick={() => setCreateOpen(true)}
             />
 
             <DeleteDialog title={"Confirm Delete"}
-                          subtitle={"Are you sure you want to delete this subarea?"}
+                          subtitle={"Are you sure you want to delete this area?"}
                           open={deleteOpen}
                           onDelete={async () => {
                               if (selectedId !== null)
-                                  await removeSubarea(selectedId);
+                                  await removeArea(selectedId);
                           }}
                           setOpen={setDeleteOpen} />
 
-            <SubareaEditDialog open={editOpen}
+            <AreaEditDialog open={editOpen}
                                onEdit={async (name) => {
                                    if (selectedId !== null)
-                                       await editSubarea(selectedId, name);
+                                       await editArea(selectedId, name);
                                }}
                                setOpen={setEditOpen} />
 
-            <SubareaCreateDialog open={createOpen}
+            <AreaCreateDialog open={createOpen}
                                  onCreate={async (name) => {
-                                     await createSubarea(name)
-                                     await fetchSubareas();
+                                     await createArea(name)
+                                     await fetchAreas();
 
                                      setCreateOpen(false)
                                  }}
@@ -68,4 +68,4 @@ const SubareaTable: React.FC = () => {
     )
 }
 
-export default SubareaTable;
+export default AreaTable;

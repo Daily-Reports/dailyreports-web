@@ -1,8 +1,8 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {IconId, IconList, IconPencil, IconX} from "@tabler/icons-react";
-import {Subarea} from "@/types/subarea.tsx";
+import {Area} from "@/types/area.tsx";
 
-export const SubareaColumns = (handleEdit: (id: number) => void, handleDelete: (id: number) => void): ColumnDef<Subarea>[] => {
+export const AreaColumns = (handleEdit: (id: number) => void, handleDelete: (id: number) => void): ColumnDef<Area>[] => {
     return [
         {
             accessorKey: "id",
