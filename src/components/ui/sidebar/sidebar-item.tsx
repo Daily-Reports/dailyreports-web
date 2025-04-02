@@ -14,15 +14,10 @@ type SidebarItemProps = {
 const SidebarItem: React.FC<SidebarItemProps> = ({to, icon, label, subItems, isOpen, setOpen}) => {
     const navigate = useNavigate();
 
-    const handleToggle = () => {
-        if (subItems)
-            setOpen?.(!isOpen);
-    };
-
     return (
         <li className="relative">
             <button
-                onClick={subItems ? handleToggle : to ? () => navigate(to) : undefined}
+                onClick={subItems ? () => setOpen?.(!isOpen) : to ? () => navigate(to) : undefined}
                 className="flex items-center justify-between w-full py-2 px-4 rounded-none text-lg font-medium hover:bg-gray-200 transition duration-200"
                 title={label}
             >
