@@ -1,29 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAuthStore} from "@/stores/authStore.tsx";
+import React, {useState} from 'react';
+import {useLogin} from "@/lib/auth.tsx";
+import {AxiosError} from "axios";
+import {useNavigate} from "react-router-dom";
 
 const LoginRoute = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const { login, isAuthenticated } = useAuthStore();
-    const navigate = useNavigate();
+    const login = useLogin({
+        onSuccess: async () => {
+            navigate("/")
+        },
+        onError: (error) => {
+            if (error instanceof AxiosError)
+                if (error.status === 404)
+                    setErrorMessage("Credenciais inválidas")
+                else setErrorMessage(error.message);
+        },
+    });
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        login(username, password).then((success) => {
-            if(success) navigate('/');
-            else setErrorMessage('Credenciais inválidas');
-        }).catch(() => {
-            setErrorMessage('Erro ao conectar ao servidor');
-        })
+        login.mutate({
+            username: username,
+            password: password,
+        });
     };
-
-    useEffect(() => {
-        if (isAuthenticated) navigate('/');
-    }, [isAuthenticated, navigate]);
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100 font-sans">

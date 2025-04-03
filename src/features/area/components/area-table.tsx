@@ -1,26 +1,36 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {AreaColumns} from './area-columns.tsx'
 import {Table} from "@/components/ui/table/table.tsx";
 import DeleteDialog from "@/components/ui/dialog/delete-dialog.tsx";
-import {useAreaStore} from "@/stores/areaStore.tsx";
-import AreaCreateDialog from "@/features/area/components/area-create-dialog.tsx";
-import AreaEditDialog from "@/features/area/components/area-edit-dialog.tsx";
+import AreaCreateDialog from "./area-create-dialog.tsx";
+import AreaEditDialog from "./area-edit-dialog.tsx";
+import {IconLoader} from "@tabler/icons-react";
+import {useDeleteSubarea} from "@/features/subarea/api/delete-subarea.tsx";
+import {useUpdateArea} from "@/features/area/api/update-area.tsx";
+import {useCreateArea} from "@/features/area/api/create-area.tsx";
+import {useAreas} from "@/features/area/api/get-areas.tsx";
 
 const AreaTable: React.FC = () => {
-    const {areas, fetchAreas, editArea, createArea, removeArea} = useAreaStore();
-
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
-    useEffect(() => {
-        fetchAreas().catch((error) => {
-            console.error(error)
-            throw new Error("Areas cannot be loaded");
-        })
-    }, [fetchAreas]);
+    const areasQuery = useAreas();
+    const deleteAreaMutation = useDeleteSubarea();
+    const updateAreaMutation = useUpdateArea();
+    const createAreaMutation = useCreateArea();
+
+    if (areasQuery.isLoading)
+        return (
+            <div className="flex h-48 w-full justify-center">
+                <IconLoader className="animate-spin" size={100}/>
+            </div>
+        );
+
+    const areas = areasQuery.data
+    if (!areas) return null;
 
     return (
         <div className="flex flex-col mt-5">
@@ -44,22 +54,26 @@ const AreaTable: React.FC = () => {
                           subtitle={"Are you sure you want to delete this area?"}
                           open={deleteOpen}
                           onDelete={async () => {
-                              if (selectedId !== null)
-                                  await removeArea(selectedId);
+                              if (selectedId)
+                                  deleteAreaMutation.mutate({id: selectedId})
                           }}
                           setOpen={setDeleteOpen} />
 
             <AreaEditDialog open={editOpen}
-                               onEdit={async (name) => {
+                            onEdit={(name) => {
                                    if (selectedId !== null)
-                                       await editArea(selectedId, name);
+                                       updateAreaMutation.mutate({
+                                           data: {name},
+                                           areaId: selectedId
+                                       });
                                }}
                                setOpen={setEditOpen} />
 
             <AreaCreateDialog open={createOpen}
-                                 onCreate={async (name) => {
-                                     await createArea(name)
-                                     await fetchAreas();
+                              onCreate={(name) => {
+                                  createAreaMutation.mutate({
+                                      data: {name}
+                                  });
 
                                      setCreateOpen(false)
                                  }}

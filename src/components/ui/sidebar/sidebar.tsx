@@ -11,11 +11,13 @@ import {
     IconUsers
 } from '@tabler/icons-react';
 import SidebarItem from "./sidebar-item.tsx";
-import {useAuthStore} from "@/stores/authStore.tsx";
 import {useSidebarStore} from "@/stores/sidebarStore.tsx";
+import {useLogout, useUser} from "@/lib/auth.tsx";
 
 const Sidebar: React.FC = () => {
-    const {user, logout} = useAuthStore();
+    const user = useUser();
+    const logout = useLogout();
+
     const {isProfileOpen, isOrderBookOpen, toggleProfile, toggleOrderBook} = useSidebarStore();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +59,7 @@ const Sidebar: React.FC = () => {
                     />
                 </ul>
 
-                {user?.role === "ADMIN" && (
+                {user.data?.role === "ADMIN" && (
                     <div className="mt-8">
                         <h3 className={`text-lg font-semibold pl-4 text-gray-500`}>
                             Admin
@@ -76,8 +78,8 @@ const Sidebar: React.FC = () => {
                     aria-label="Perfil"
                 >
                     <div className="flex flex-col text-left leading-tight">
-                        <p className="text-gray-700">{user?.username || "Usuário"}</p>
-                        <p className="text-gray-900 text-xs font-semibold">{user?.email}</p>
+                        <p className="text-gray-700">{user.data?.username || "Usuário"}</p>
+                        <p className="text-gray-900 text-xs font-semibold">{user.data?.email}</p>
                     </div>
 
                     <IconSwitchVertical size={20} className="text-gray-600" />
@@ -86,7 +88,7 @@ const Sidebar: React.FC = () => {
                 {isProfileOpen && (
                     <div className="absolute bottom-15 w-full bg-white shadow-md rounded-lg p-3">
                         <button
-                            onClick={logout}
+                            onClick={() => logout.mutate({})}
                             className="flex items-center w-full py-2 px-4 text-red-600 bg-red-100 rounded-lg hover:bg-red-200 transition duration-200"
                             aria-label="Sair"
                         >

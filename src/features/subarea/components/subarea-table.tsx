@@ -1,69 +1,81 @@
-import {useSubareaStore} from "@/stores/subareaStore.tsx";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Table} from "@/components/ui/table/table.tsx";
+import {SubareaColumns} from "./subarea-columns.tsx";
+import {useSubareas} from "@/features/subarea/api/get-subareas.tsx";
+import {IconLoader} from "@tabler/icons-react";
 import DeleteDialog from "@/components/ui/dialog/delete-dialog.tsx";
-import SubareaEditDialog from "@/features/subarea/components/subarea-edit-dialog.tsx";
-import SubareaCreateDialog from "@/features/subarea/components/subarea-create-dialog.tsx";
-import {SubareaColumns} from "@/features/subarea/components/subarea-columns.tsx";
+import {useDeleteSubarea} from "@/features/subarea/api/delete-subarea.tsx";
+import SubareaEditDialog from "./subarea-edit-dialog.tsx";
+import {useUpdateSubarea} from "@/features/subarea/api/update-subarea.tsx";
+import SubareaCreateDialog from "./subarea-create-dialog.tsx";
+import {useCreateSubarea} from "@/features/subarea/api/create-subarea.tsx";
 
 const SubareaTable: React.FC = () => {
-    const {subareas, fetchSubareas, editSubarea, createSubarea, removeSubarea} = useSubareaStore();
-
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
-
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
-    useEffect(() => {
-        fetchSubareas().catch((error) => {
-            console.error(error)
-            throw new Error("Subareas cannot be loaded");
-        })
-    }, [fetchSubareas]);
+    const subareasQuery = useSubareas();
+    const deleteSubareaMutation = useDeleteSubarea();
+    const updateSubareaMutation = useUpdateSubarea();
+    const createSubareaMutation = useCreateSubarea();
+
+    if (subareasQuery.isLoading)
+        return (
+            <div className="flex h-48 w-full justify-center">
+                <IconLoader className="animate-spin" size={100}/>
+            </div>
+        );
+
+    const subareas = subareasQuery.data
+    if (!subareas) return null;
 
     return (
         <div className="flex flex-col mt-5">
-            <Table
-                    columns={SubareaColumns(
-                            (id) => {
-                                setEditOpen(true);
-                                setSelectedId(id);
-                            },
-                            (id) => {
-                                setDeleteOpen(true);
-                                setSelectedId(id);
-                            }
-                    )}
-                    data={subareas}
-                    toolbarPlaceholder={"Filter subareas..."}
-                    onCreateClick={() => setCreateOpen(true)}
+            <Table columns={SubareaColumns(
+                (id) => {
+                    setEditOpen(true);
+                    setSelectedId(id);
+                },
+                (id) => {
+                    setDeleteOpen(true);
+                    setSelectedId(id);
+                }
+            )}
+                   data={subareas}
+                   toolbarPlaceholder={"Filter subareas..."}
+                   onCreateClick={() => setCreateOpen(true)}
             />
 
             <DeleteDialog title={"Confirm Delete"}
-                          subtitle={"Are you sure you want to delete this subarea?"}
+                          subtitle={"Are you sure you want to delete this order?"}
                           open={deleteOpen}
-                          onDelete={async () => {
-                              if (selectedId !== null)
-                                  await removeSubarea(selectedId);
+                          onDelete={() => {
+                              if (selectedId)
+                                  deleteSubareaMutation.mutate({id: selectedId})
                           }}
                           setOpen={setDeleteOpen} />
 
             <SubareaEditDialog open={editOpen}
-                               onEdit={async (name) => {
+                               onEdit={(name) => {
                                    if (selectedId !== null)
-                                       await editSubarea(selectedId, name);
+                                       updateSubareaMutation.mutate({
+                                           data: {name},
+                                           subareaId: selectedId
+                                       });
                                }}
-                               setOpen={setEditOpen} />
+                               setOpen={setEditOpen}/>
 
             <SubareaCreateDialog open={createOpen}
-                                 onCreate={async (name) => {
-                                     await createSubarea(name)
-                                     await fetchSubareas();
+                                 onCreate={(name) => {
+                                     createSubareaMutation.mutate({
+                                         data: {name}
+                                     });
 
                                      setCreateOpen(false)
                                  }}
-                                 setOpen={setCreateOpen} />
+                                 setOpen={setCreateOpen}/>
         </div>
     )
 }
