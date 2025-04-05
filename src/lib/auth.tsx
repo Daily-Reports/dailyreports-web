@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {api} from "@/lib/api-client.tsx";
-import {User} from "@/types/User.tsx";
+import {User} from "@/types/user.tsx";
 import {AuthResponse} from "@/types/auth-response.tsx";
 import {configureAuth} from "react-query-auth";
 import {queryClient} from "@/lib/queryclient.ts";

@@ -1,4 +1,4 @@
-import {User} from "@/types/User.tsx";
+import {User} from "@/types/user.tsx";
 
 export type AuthResponse = {
     user: User;
