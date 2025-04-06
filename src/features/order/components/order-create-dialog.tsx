@@ -68,7 +68,7 @@ const OrderCreateDialog: React.FC<OrderCreateDialogProps> = ({open, setOpen, onC
         <Dialog open={open}
                 onClose={clearFormAndClose}>
             <div className="text-center w-112">
-                <IconDeviceFloppy size={56} className="mx-auto£"/>
+                <IconDeviceFloppy size={56} className="mx-auto"/>
 
                 <h3 className="text-lg font-black text-gray-800">Create order</h3>
                 <p className="text-sm text-gray-500">Define order details.</p>
