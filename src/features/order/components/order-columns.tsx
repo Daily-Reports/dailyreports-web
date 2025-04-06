@@ -47,7 +47,10 @@ export const OrderColumns = (handleEdit: (id: number) => void, handleDelete: (id
         },
         {
             accessorKey: "subareaId",
-            cell: (info) => <SubareaName subareaId={info.getValue() as number} />,
+            cell: (info) => {
+                const value = info.getValue();
+                return value != null ? <SubareaName subareaId={value as number} /> : "-";
+            },
             header: () => (
                 <span className="flex items-center">
                     <IconMap className="mr-2" size={16}/> subarea
