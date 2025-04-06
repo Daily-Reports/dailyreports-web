@@ -52,27 +52,25 @@ const EventTable: React.FC = () => {
             <DeleteDialog title={"Confirm Delete"}
                           subtitle={"Are you sure you want to delete this event?"}
                           open={deleteOpen}
-                          onDelete={async () => {
+                          onDelete={() => {
                               if (selectedId)
                                   deleteEventMutation.mutate({id: selectedId})
                           }}
                           setOpen={setDeleteOpen} />
 
             <EventEditDialog open={editOpen}
-                               onEdit={async (name) => {
-                                   if (selectedId !== null)
-                                       updateEventMutation.mutate({
-                                           data: {name},
-                                           eventId: selectedId
-                                       });
-                               }}
-                               setOpen={setEditOpen} />
+                             onEdit={(data) => {
+                                 if (selectedId !== null)
+                                     updateEventMutation.mutate({
+                                         data,
+                                         eventId: selectedId
+                                     });
+                             }}
+                             setOpen={setEditOpen}/>
 
             <EventCreateDialog open={createOpen}
-                                 onCreate={async (name) => {
-                                     createEventMutation.mutate({
-                                         data: {name}
-                                     });
+                               onCreate={(data) => {
+                                   createEventMutation.mutate({data});
 
                                      setCreateOpen(false)
                                  }}
