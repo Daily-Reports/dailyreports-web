@@ -8,7 +8,7 @@ type SubareaNameProps = {
 const SubareaName: React.FC<SubareaNameProps>  = ({subareaId}) => {
     const subareaQuery = useSubarea({id: subareaId});
 
-    return <span>{subareaQuery.data?.name ?? "Unknown Subarea"}</span>;
+    return <span>{subareaQuery.data?.name ?? "-"}</span>;
 };
 
 export default SubareaName;

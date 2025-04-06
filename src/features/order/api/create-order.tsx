@@ -24,9 +24,8 @@ export const createOrderInputSchema = z.object({
         invalid_type_error: "Invalid area id",
     }),
     subareaId: z.number({
-        required_error: "Subarea is required",
         invalid_type_error: "Invalid subarea id",
-    }),
+    }).optional(),
     speciality: z.nativeEnum(OrderSpeciality, {
         errorMap: () => {
             return {message: 'Speciality is required'};
