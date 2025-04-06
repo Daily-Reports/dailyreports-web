@@ -7,10 +7,12 @@ import {OrderColumns} from "@/features/order/components/order-columns.tsx";
 import {IconLoader} from "@tabler/icons-react";
 import {useOrders} from "@/features/order/api/get-orders.tsx";
 import {useDeleteOrder} from "@/features/order/api/delete-order.tsx";
+import {useCreateOrder} from "@/features/order/api/create-order.tsx";
 
 const OrderTable: React.FC = () => {
     const ordersQuery = useOrders();
     const deleteOrderMutation = useDeleteOrder();
+    const createOrderMutation = useCreateOrder();
 
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -21,7 +23,7 @@ const OrderTable: React.FC = () => {
     if (ordersQuery.isLoading)
         return (
             <div className="flex h-48 w-full justify-center">
-                <IconLoader className="animate-spin" size={100} />
+                <IconLoader className="animate-spin" size={100}/>
             </div>
         );
 
@@ -53,19 +55,18 @@ const OrderTable: React.FC = () => {
                               if (selectedId !== null)
                                   deleteOrderMutation.mutate({id: selectedId});
                           }}
-                          setOpen={setDeleteOpen} />
+                          setOpen={setDeleteOpen}/>
 
             {/* will work soon */}
             <OrderEditDialog open={editOpen}
                              onEdit={() => {}}
-                             setOpen={setEditOpen} />
+                             setOpen={setEditOpen}/>
 
-            {/* will work soon */}
             <OrderCreateDialog open={createOpen}
-                               onCreate={() => {
-                                   setCreateOpen(false)
-                               }}
-                               setOpen={setCreateOpen} />
+                               setOpen={setCreateOpen}
+                               onCreate={(data) => {
+                                   createOrderMutation.mutate({data})
+                               }}/>
         </div>
     )
 }
