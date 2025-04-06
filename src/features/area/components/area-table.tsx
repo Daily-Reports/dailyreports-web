@@ -61,24 +61,20 @@ const AreaTable: React.FC = () => {
                           setOpen={setDeleteOpen} />
 
             <AreaEditDialog open={editOpen}
-                            onEdit={(name) => {
-                                   if (selectedId !== null)
-                                       updateAreaMutation.mutate({
-                                           data: {name},
-                                           areaId: selectedId
-                                       });
-                               }}
+                            onEdit={(data) => {
+                                if (selectedId !== null)
+                                    updateAreaMutation.mutate({data,
+                                        areaId: selectedId
+                                    });
+                            }}
                                setOpen={setEditOpen} />
 
             <AreaCreateDialog open={createOpen}
-                              onCreate={(name) => {
-                                  createAreaMutation.mutate({
-                                      data: {name}
-                                  });
-
-                                     setCreateOpen(false)
-                                 }}
-                                 setOpen={setCreateOpen} />
+                              onCreate={(data) => {
+                                  createAreaMutation.mutate({data});
+                                  setCreateOpen(false)
+                              }}
+                              setOpen={setCreateOpen} />
         </div>
     )
 }

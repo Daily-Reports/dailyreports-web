@@ -6,7 +6,7 @@ import {getAreasQueryOptions} from "./get-areas.tsx";
 import {Area} from "@/types/area.tsx";
 
 export const updateAreaInputSchema = z.object({
-    name: z.string().min(1, 'Required'),
+    name: z.string().min(1, 'New area name is required'),
 });
 
 export type UpdateAreaInput = z.infer<typeof updateAreaInputSchema>;
