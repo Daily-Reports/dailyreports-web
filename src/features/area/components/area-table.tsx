@@ -5,10 +5,11 @@ import DeleteDialog from "@/components/ui/dialog/delete-dialog.tsx";
 import AreaCreateDialog from "./area-create-dialog.tsx";
 import AreaEditDialog from "./area-edit-dialog.tsx";
 import {IconLoader} from "@tabler/icons-react";
-import {useDeleteSubarea} from "@/features/subarea/api/delete-subarea.tsx";
+
 import {useUpdateArea} from "@/features/area/api/update-area.tsx";
 import {useCreateArea} from "@/features/area/api/create-area.tsx";
 import {useAreas} from "@/features/area/api/get-areas.tsx";
+import {useDeleteArea} from "@/features/area/api/delete-area.tsx";
 
 const AreaTable: React.FC = () => {
     const [editOpen, setEditOpen] = useState(false);
@@ -18,7 +19,7 @@ const AreaTable: React.FC = () => {
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     const areasQuery = useAreas();
-    const deleteAreaMutation = useDeleteSubarea();
+    const deleteAreaMutation = useDeleteArea();
     const updateAreaMutation = useUpdateArea();
     const createAreaMutation = useCreateArea();
 
