@@ -26,9 +26,9 @@ type OrderCreateDialogProps = {
             description: string;
             eventId: number;
             areaId: number;
-            subareaId: number;
+            subareaId?: number | undefined;
             speciality: OrderSpeciality;
-        }
+        }, options: { onSuccess: () => void }
     ) => void;
 }
 
@@ -126,8 +126,11 @@ const OrderCreateDialog: React.FC<OrderCreateDialogProps> = ({open, setOpen, onC
                                 return;
                             }
 
-                            clearFormAndClose();
-                            onCreate(parsed.data);
+                            onCreate(parsed.data, {
+                                onSuccess: () => {
+                                    clearFormAndClose();
+                                }
+                            });
                         }}>
                         Submit
                     </button>

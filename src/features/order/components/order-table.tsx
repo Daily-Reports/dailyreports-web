@@ -64,8 +64,10 @@ const OrderTable: React.FC = () => {
 
             <OrderCreateDialog open={createOpen}
                                setOpen={setCreateOpen}
-                               onCreate={(data) => {
-                                   createOrderMutation.mutate({data})
+                               onCreate={(data, options) => {
+                                   createOrderMutation.mutate({data}, {
+                                       onSuccess: options.onSuccess,
+                                   });
                                }}/>
         </div>
     )
