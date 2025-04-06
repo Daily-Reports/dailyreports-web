@@ -126,6 +126,7 @@ const OrderCreateDialog: React.FC<OrderCreateDialogProps> = ({open, setOpen, onC
                                 return;
                             }
 
+                            clearFormAndClose();
                             onCreate(parsed.data);
                         }}>
                         Submit
