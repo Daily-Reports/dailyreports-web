@@ -58,21 +58,17 @@ const SubareaTable: React.FC = () => {
                           setOpen={setDeleteOpen} />
 
             <SubareaEditDialog open={editOpen}
-                               onEdit={(name) => {
+                               onEdit={(data) => {
                                    if (selectedId !== null)
-                                       updateSubareaMutation.mutate({
-                                           data: {name},
+                                       updateSubareaMutation.mutate({data,
                                            subareaId: selectedId
                                        });
                                }}
                                setOpen={setEditOpen}/>
 
             <SubareaCreateDialog open={createOpen}
-                                 onCreate={(name) => {
-                                     createSubareaMutation.mutate({
-                                         data: {name}
-                                     });
-
+                                 onCreate={(data) => {
+                                     createSubareaMutation.mutate({data});
                                      setCreateOpen(false)
                                  }}
                                  setOpen={setCreateOpen}/>

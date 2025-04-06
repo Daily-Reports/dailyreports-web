@@ -7,7 +7,7 @@ import {getSubareasQueryOptions} from './get-subareas';
 import {Subarea} from "@/types/subarea.tsx";
 
 export const createSubareaInputSchema = z.object({
-    name: z.string().min(1, 'Required'),
+    name: z.string().min(1, 'Subarea name is required'),
 });
 
 export type CreateSubareaInput = z.infer<typeof createSubareaInputSchema>;
