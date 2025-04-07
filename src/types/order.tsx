@@ -1,29 +1,29 @@
 export enum OrderSpeciality {
-    MECHANICAL,
-    ELECTRICAL,
-    LUBRICATION,
-    INSTRUMENTATION
+  MECHANICAL,
+  ELECTRICAL,
+  LUBRICATION,
+  INSTRUMENTATION,
 }
 
 export enum OrderStatus {
-    DONE,
-    IN_PROGRESS,
-    NOT_STARTED,
-    CANCELED
+  DONE,
+  IN_PROGRESS,
+  NOT_STARTED,
+  CANCELED,
 }
 
 export type Order = {
-    id: number,
+  id: number;
 
-    orderNumber: number
+  orderNumber: number;
 
-    eventId: number
-    areaId: number
-    subareaId: number
+  eventId: number;
+  areaId: number;
+  subareaId: number;
 
-    speciality: OrderSpeciality
-    status: OrderStatus
+  speciality: OrderSpeciality;
+  status: OrderStatus;
 
-    description: string
-    technical: string
+  description: string;
+  technical: string;
 };

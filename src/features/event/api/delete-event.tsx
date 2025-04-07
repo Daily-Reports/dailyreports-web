@@ -1,34 +1,36 @@
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import {api} from '@/lib/api-client';
-import {MutationConfig} from '@/lib/react-query';
-import {getEventsQueryOptions} from "./get-events";
+import { api } from "@/lib/api-client";
+import { MutationConfig } from "@/lib/react-query";
+import { getEventsQueryOptions } from "./get-events";
 
 export type DeleteEventDto = {
-    id: number;
+  id: number;
 };
 
-export const deleteEvent = ({id}: DeleteEventDto) => {
-    return api.delete(`/events/${id}`);
+export const deleteEvent = ({ id }: DeleteEventDto) => {
+  return api.delete(`/events/${id}`);
 };
 
 type UseDeleteEventOptions = {
-    mutationConfig?: MutationConfig<typeof deleteEvent>;
+  mutationConfig?: MutationConfig<typeof deleteEvent>;
 };
 
-export const useDeleteEvent = ({mutationConfig,}: UseDeleteEventOptions = {}) => {
-    const queryClient = useQueryClient();
+export const useDeleteEvent = ({
+  mutationConfig,
+}: UseDeleteEventOptions = {}) => {
+  const queryClient = useQueryClient();
 
-    const {onSuccess, ...restConfig} = mutationConfig || {};
+  const { onSuccess, ...restConfig } = mutationConfig || {};
 
-    return useMutation({
-        onSuccess: async (...args) => {
-            await queryClient.invalidateQueries({
-                queryKey: getEventsQueryOptions().queryKey,
-            });
-            onSuccess?.(...args);
-        },
-        ...restConfig,
-        mutationFn: deleteEvent,
-    });
+  return useMutation({
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries({
+        queryKey: getEventsQueryOptions().queryKey,
+      });
+      onSuccess?.(...args);
+    },
+    ...restConfig,
+    mutationFn: deleteEvent,
+  });
 };

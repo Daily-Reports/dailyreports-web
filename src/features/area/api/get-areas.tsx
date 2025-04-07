@@ -1,27 +1,27 @@
-import {queryOptions, useQuery} from '@tanstack/react-query';
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
-import {api} from '@/lib/api-client';
-import {QueryConfig} from "@/lib/react-query";
-import {Area} from "@/types/area.tsx";
+import { api } from "@/lib/api-client";
+import { QueryConfig } from "@/lib/react-query";
+import { Area } from "@/types/area.tsx";
 
 export const getAreas = (): Promise<Area[]> => {
-    return api.get(`/areas`);
+  return api.get(`/areas`);
 };
 
 export const getAreasQueryOptions = () => {
-    return queryOptions({
-        queryKey: ['areas'],
-        queryFn: getAreas,
-    });
+  return queryOptions({
+    queryKey: ["areas"],
+    queryFn: getAreas,
+  });
 };
 
 type UseUsersOptions = {
-    queryConfig?: QueryConfig<typeof getAreasQueryOptions>;
+  queryConfig?: QueryConfig<typeof getAreasQueryOptions>;
 };
 
-export const useAreas = ({queryConfig}: UseUsersOptions = {}) => {
-    return useQuery({
-        ...getAreasQueryOptions(),
-        ...queryConfig,
-    });
+export const useAreas = ({ queryConfig }: UseUsersOptions = {}) => {
+  return useQuery({
+    ...getAreasQueryOptions(),
+    ...queryConfig,
+  });
 };

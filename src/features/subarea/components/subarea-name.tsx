@@ -1,14 +1,14 @@
 import React from "react";
-import {useSubarea} from "@/features/subarea/api/fetch-subarea.tsx";
+import { useSubarea } from "@/features/subarea/api/fetch-subarea.tsx";
 
 type SubareaNameProps = {
-    subareaId: number;
-}
+  subareaId: number;
+};
 
-const SubareaName: React.FC<SubareaNameProps>  = ({subareaId}) => {
-    const subareaQuery = useSubarea({id: subareaId});
+const SubareaName: React.FC<SubareaNameProps> = ({ subareaId }) => {
+  const subareaQuery = useSubarea({ id: subareaId });
 
-    return <span>{subareaQuery.data?.name ?? "-"}</span>;
+  return <span>{subareaQuery.data?.name ?? "-"}</span>;
 };
 
 export default SubareaName;
