@@ -22,6 +22,7 @@ const EventSelect: React.FC<EventSelectProps> = ({events, selectValue, setSelect
                 options={formattedEvents}
                 selectValue={selectValue}
                 setSelectValue={setSelectedValue}
+                compareFn={(a, b) => a.id === b.id}
             />
         </div>
     );

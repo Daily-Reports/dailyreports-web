@@ -23,6 +23,12 @@ const OrderSpecialitySelect: React.FC<Props> = ({selectValue, setSelectedValue})
                 options={formattedOrderSpecialities}
                 selectValue={selectValue}
                 setSelectValue={setSelectedValue}
+                compareFn={(a, b) => {
+                    const aValue = OrderSpeciality[a]?.toString();
+                    const bValue = typeof b === "string" ? b : OrderSpeciality[b]?.toString();
+
+                    return aValue === bValue;
+                }}
             />
         </div>
     );

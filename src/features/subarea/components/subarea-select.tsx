@@ -9,10 +9,13 @@ type SubareaSelectProps = {
 };
 
 const SubareaSelect: React.FC<SubareaSelectProps> = ({subareas, selectValue, setSelectedValue}) => {
-    const formattedSubareas = subareas.map((subarea) => ({
-        value: subarea,
-        label: subarea.name,
-    }));
+    const formattedSubareas: { value: Subarea | null; label: string }[] = [
+        {value: null, label: '-'},
+        ...subareas.map((subarea) => ({
+            value: subarea,
+            label: subarea.name,
+        })),
+    ];
 
     return (
         <div className="App">
@@ -22,6 +25,7 @@ const SubareaSelect: React.FC<SubareaSelectProps> = ({subareas, selectValue, set
                 options={formattedSubareas}
                 selectValue={selectValue}
                 setSelectValue={setSelectedValue}
+                compareFn={(a, b) => a.id === b.id}
             />
         </div>
     );

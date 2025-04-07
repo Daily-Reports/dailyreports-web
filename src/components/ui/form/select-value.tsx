@@ -1,7 +1,7 @@
 import Select from "react-select";
 
 type Option<T> = {
-    value: T;
+    value: T | null;
     label: string;
 };
 
@@ -11,7 +11,8 @@ type SelectValueProps<T> = {
     options: Option<T>[];
     selectValue: T | null;
     setSelectValue: (value: T | null) => void;
-};
+    compareFn: (a: T, b: T) => boolean;
+}
 
 const SelectValue = <T, >({
                               title,
@@ -19,9 +20,13 @@ const SelectValue = <T, >({
                               options,
                               selectValue,
                               setSelectValue,
+                              compareFn = (a, b) => a === b,
+                              ...rest
                           }: SelectValueProps<T>) => {
 
-    const selectedOption = options.find((opt) => opt.value === selectValue) ?? null;
+    const selectedOption = options.find(
+        (opt) => opt.value !== null && selectValue !== null && compareFn(opt.value, selectValue)
+    ) ?? null;
 
     return (
         <div className="App">
@@ -39,14 +44,11 @@ const SelectValue = <T, >({
                         outline: "none",
                         borderWidth: "1px",
                         borderColor: state.isFocused ? "black" : base.borderColor,
-                        "&:focus": {
-                            outline: "black",
-                        },
-                        "&:hover": {
-                            borderColor: "none",
-                        },
+                        "&:focus": {outline: "black"},
+                        "&:hover": {borderColor: "none"},
                     }),
                 }}
+                {...rest}
             />
         </div>
     );

@@ -22,6 +22,7 @@ const AreaSelect: React.FC<AreaSelectProps> = ({areas, selectValue, setSelectVal
                 options={formattedAreas}
                 selectValue={selectValue}
                 setSelectValue={setSelectValue}
+                compareFn={(a, b) => a.id === b.id}
             />
         </div>
     );
