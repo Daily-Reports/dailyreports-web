@@ -60,7 +60,7 @@ const SubareaCreateDialog: React.FC<SubareaCreateDialogProps> = ({open, setOpen,
                         </button>
 
                         <button className="w-full py-2 shadow rounded-lg font-extrabold hover:bg-gray-200"
-                                onClick={clearErrors}
+                                onClick={clearFormAndClose}
                         >
                             Cancel
                         </button>
