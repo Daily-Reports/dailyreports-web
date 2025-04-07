@@ -1,7 +1,3 @@
-import {Event} from "@/types/event.tsx";
-import {Area} from "@/types/area.tsx";
-import {Subarea} from "@/types/subarea.tsx";
-
 export enum OrderSpeciality {
     MECHANICAL,
     ELECTRICAL,
@@ -21,9 +17,9 @@ export type Order = {
 
     orderNumber: number
 
-    eventId: Event
-    areaId: Area
-    subareaId: Subarea
+    eventId: number
+    areaId: number
+    subareaId: number
 
     speciality: OrderSpeciality
     status: OrderStatus
