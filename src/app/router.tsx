@@ -7,6 +7,7 @@ import NotFoundRoute from "./route/not-found";
 import AreaRoute from "@/app/route/app/area";
 import EventRoute from "@/app/route/app/event";
 import OrderRoute from "@/app/route/app/order";
+import EmployeeRoute from "@/app/route/app/employee.tsx";
 
 export const AppRouter = () => {
     return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
                 <Route element={<PrivateRoute />}>
                     <Route path="/" element={<DashboardRoute />} />
                     <Route path="*" element={<NotFoundRoute />} />
+                    <Route path="employees" element={<EmployeeRoute/>}/>
                     <Route path="events" element={<EventRoute />} />
                     <Route path="areas" element={<AreaRoute />} />
                     <Route path="subareas" element={<SubareaRoute />} />
