@@ -8,11 +8,14 @@ import {IconLoader} from "@tabler/icons-react";
 import {useOrders} from "@/features/order/api/get-orders.tsx";
 import {useDeleteOrder} from "@/features/order/api/delete-order.tsx";
 import {useCreateOrder} from "@/features/order/api/create-order.tsx";
+import {useUpdateOrder} from "@/features/order/api/update-order.tsx";
 
 const OrderTable: React.FC = () => {
     const ordersQuery = useOrders();
+
     const deleteOrderMutation = useDeleteOrder();
     const createOrderMutation = useCreateOrder();
+    const updateOrderMutation = useUpdateOrder();
 
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -48,26 +51,36 @@ const OrderTable: React.FC = () => {
                 onCreateClick={() => setCreateOpen(true)}
             />
 
-            <DeleteDialog title={"Confirm Delete"}
-                          subtitle={"Are you sure you want to delete this order?"}
-                          open={deleteOpen}
-                          onDelete={async () => {
-                              if (selectedId !== null)
-                                  deleteOrderMutation.mutate({id: selectedId});
-                          }}
-                          setOpen={setDeleteOpen}/>
+            {
+                selectedId && (
+                    <DeleteDialog title={"Confirm Delete"}
+                                  subtitle={"Are you sure you want to delete this order?"}
+                                  open={deleteOpen}
+                                  onDelete={() => {
+                                      deleteOrderMutation.mutate({id: selectedId});
+                                  }}
+                                  setOpen={setDeleteOpen}/>
+                )
+            }
 
-            {/* will work soon */}
-            <OrderEditDialog open={editOpen}
-                             onEdit={() => {}}
-                             setOpen={setEditOpen}/>
+            {
+                selectedId && (
+                    <OrderEditDialog open={editOpen}
+                                     onEdit={(data, options) => {
+                                         updateOrderMutation.mutate({
+                                             data,
+                                             orderId: selectedId
+                                         }, {onSuccess: options.onSuccess})
+                                     }}
+                                     setOpen={setEditOpen}
+                                     orderId={selectedId}/>
+                )
+            }
 
             <OrderCreateDialog open={createOpen}
                                setOpen={setCreateOpen}
                                onCreate={(data, options) => {
-                                   createOrderMutation.mutate({data}, {
-                                       onSuccess: options.onSuccess,
-                                   });
+                                   createOrderMutation.mutate({data}, {onSuccess: options.onSuccess});
                                }}/>
         </div>
     )
