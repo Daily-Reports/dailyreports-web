@@ -11,21 +11,22 @@ export const fetchSubarea = async ({ id }: FetchSubareaDto): Promise<Subarea> =>
     return await api.get(`/subareas/${id}`)
 };
 
-export const fetchSubareaQueryOptions = (id: number) => {
+export const fetchSubareaQueryOptions = (id: number | undefined) => {
     return queryOptions({
         queryKey: ['subarea', id],
-        queryFn: () => fetchSubarea({ id }),
+        queryFn: () => fetchSubarea({id} as FetchSubareaDto),
     });
 };
 
 type UseSubareaOptions = {
-    id: number;
+    id: number | undefined;
     queryConfig?: QueryConfig<typeof fetchSubareaQueryOptions>;
 };
 
-export const useSubarea = ({ id, queryConfig }: UseSubareaOptions) => {
+export const useSubarea = ({id, queryConfig}: UseSubareaOptions) => {
     return useQuery({
         ...fetchSubareaQueryOptions(id),
         ...queryConfig,
+        enabled: id !== undefined && (queryConfig?.enabled ?? true),
     });
 };
